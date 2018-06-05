@@ -16,7 +16,15 @@ const config = {
             test: /\.(js)$/,
             exclude: /node_modules/,
             loader: 'babel-loader',
-        }]
+        }],
+    },
+    externals: {
+        react: {
+            root: 'React',
+            commonjs2: 'react',
+            commonjs: 'react',
+            amd: 'react'
+        }
     },
     optimization: {
         minimizer: [

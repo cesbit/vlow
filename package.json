@@ -4,9 +4,9 @@
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
   "main": "vlow.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --require babel-core/register",
     "build:dev": "webpack -d --progress --profile --colors",
-    "build:prod": "webpack -p --progress --profile --colors"
+    "build:prod": "NODE_ENV='production' webpack -p --progress --profile --colors"
   },
   "repository": {
     "type": "git",
@@ -40,5 +40,8 @@
     "uglifyjs-webpack-plugin": "1.2.5",
     "webpack": "^4.10.2",
     "webpack-cli": "2.1.4"
+  },
+  "peerDependencies": {
+    "react": "^16.4.0"
   }
 }

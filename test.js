@@ -1,72 +1,61 @@
-/* global require, describe, it */
-'use strict';
+/* global describe, it */
 
-var assert = require('assert');
-var Vlow = require('./dist/vlow').default;
+/**
+ * This test script should run with the 'dev' version of Vlow, including React.
+ * When the production version is compiled, react is not included.
+ */
+import React from 'react';
+import assert from 'assert';
+import Vlow from './dist/vlow';
 
-var DummyComponent = function(props) {
-    this.props = props;
-    this.state = {};
-};
-
-DummyComponent.prototype.setState = function(newState, callback) {
-    setTimeout(this._applyState, 100, newState, callback);
-};
-
-DummyComponent.prototype._applyState = function(newState, callback) {
-    for (var k in newState) {
-        if (Object.prototype.hasOwnProperty.call(newState, k)) {
-            this.state[k] = newState[k];
-        }
-    }
-    if (typeof callback === 'function') {
-        callback();
-    }
-};
-
-var DummyReact = {
-    Component: DummyComponent
-};
-
-var getApp = function() {
-    var App = {};
-    var MyActions = Vlow.createActions(['add', 'pop']);
-    var MyStore = function() {
-        Vlow.Store.call(this, MyActions);
+let TestActions = Vlow.createActions(['add', 'pop']);
+class TestStore extends Vlow.Store {
+    constructor() {
+        super(TestActions);
         this.state = {
             items: []
         };
-    };
-
-    MyStore.prototype.onAdd = function(item) {
+    }
+    onAdd(item) {
         this.setState({
-            items: this.state.items.slice().push(item)
+            items: [...this.state.items, item]
         });
-    };
+    }
 
-    MyStore.prototype.onPop = function() {
+    onPop() {
         if (this.state.items.length) {
             this.setState({
                 items: this.state.items.slice(0, -1)
             });
         }
-    };
-    App.myStore
-};
+    }
+}
 
-describe('Test Vlow.defineReact', function () {
+class TestComponent extends Vlow.Component {
+    constructor(props) {
+        super(props);
+        this.mapStore(TestStore);
+    }
+}
 
-    it('Define invalid arguments as React', function () {
-        assert.throws(function() { Vlow.defineReact(); });
-        assert.throws(function() { Vlow.defineReact({}); });
-        assert.throws(function() { Vlow.defineReact(DummyComponent); });
-    });
+class SomeClass extends React.Component {
+    isSomeClass() {
+        return true;
+    }
+}
 
-    it('Define DummyReact as React', function () {
-        assert.doesNotThrow(function() { Vlow.defineReact(DummyReact); });
-    });
+class TestExtendedComponent extends Vlow.Component.extend(SomeClass) {
+    constructor(props) {
+        super(props);
+        this.mapStores([TestStore]);
+    }
+}
 
-});
+
+
+
+var item0 = {id: 0, name: 'foo'};
+var item1 = {id: 2, name: 'oof'};
 
 describe('Test Vlow.createActions', function () {
 
@@ -94,3 +83,55 @@ describe('Test Vlow.createActions', function () {
     });
 
 });
+
+describe('Test Vlow.Component', function () {
+
+    let component = new TestComponent();
+
+    it('Initial items should return empty', function () {
+        assert.deepEqual(component.state.items, []);
+    });
+
+    it('Add action should add items to the store', function () {
+        TestActions.add(item0);
+        TestActions.add(item1);
+        assert.equal(component.state.items.length, 2);
+    });
+
+    it('Pop action should remove the last item from the store', function () {
+        assert.equal(component.state.items.length, 2);
+        TestActions.pop();
+        TestActions.pop();
+        assert.equal(component.state.items.length, 0);
+    });
+
+    it('Component should be able to mount', function () {
+        assert.doesNotThrow(() => { component.componentWillMount(); });
+    });
+
+
+    it('Component should unmount', function () {
+        assert.doesNotThrow(() => { component.componentWillUnmount(); });
+    });
+});
+
+// describe('Test Vlow.Component.extend', function () {
+//     let extendedComponent = new TestComponent();
+
+//     it('Initial items should return empty', function () {
+//         assert.deepEqual(extendedComponent.state.items, []);
+//     });
+
+//     it('Add action should add items to the store', function () {
+//         TestActions.add(item0);
+//         TestActions.add(item1);
+//         assert.equal(extendedComponent.state.items.length, 2);
+//     });
+
+//     it('Pop action should remove the last item from the store', function () {
+//         assert.equal(extendedComponent.state.items.length, 2);
+//         TestActions.pop();
+//         TestActions.pop();
+//         assert.equal(extendedComponent.state.items.length, 0);
+//     });
+// });
