@@ -170,7 +170,8 @@ By default the `Vlow.Component` class extends the `React.Component` class but yo
 custom class. This is possible by using `Vlow.Component..extend()`.
 
 ```javascript
-// In this example we create a Vlow Component which extends React.PureComponent instead of the default React.Component
+// In this example we create a Vlow Component which extends React.PureComponent
+// instead of the default React.Component
 class MyComponent extends Vlow.Component.extend(React.PureComponent) {
     ...
 }
