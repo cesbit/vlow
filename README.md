@@ -71,13 +71,17 @@ class ItemStore extends Vlow.Store {
         };
     }
 
-    // Implement onAction functions for each action defined by actions. (It is not required to create the on.. functions but usually you want to)
+    // Implement onAction functions for each action defined by actions.
+    // (It is not required to create the on.. functions but usually you want to)
     onAdd(item) {
         // Update the state like you would do with React.
         // Just like react the first argument can also be a function.
-        // A second argument is also accepted. This second argument in the .setState on a normal React Component is a callback which
-        // is triggered as soon as the Component is rendered. In case of a Vlow.Store it is is also a callback but is triggered
-        // only once when all components which are mapped to the store are rendered.
+        //
+        // A second argument is also accepted. When using a second argument in a
+        // React Component, the argument is a callback which is triggered as soon as
+        // the Component is rendered. In case of a Vlow.Store, it is is also a callback
+        // but is triggered only once when all components which are mapped to the store
+        // are rendered.
         this.setState({items: [...this.state.items, item]});
     }
 
