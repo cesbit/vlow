@@ -4,11 +4,11 @@ A simple library for unidirectional dataflow architecture inspired by Reflux
 ---------------------------------------
   * [Installation](#installation)
   * [Overview](#overview)
-  * [Create actions](@create-actions)
-  * [Create a store](@create-a-store)
-  * [Map stores to Components](@map-stores-to-components)
-    * [Using altState](@using-altstate)
-    * [Alternative super class](@alternative-super-class)
+  * [Create actions](#create-actions)
+  * [Create a store](#create-a-store)
+  * [Map stores to Components](#map-stores-to-components)
+    * [Using altState](#using-altstate)
+    * [Alternative super class](#alternative-super-class)
 
 ---------------------------------------
 
@@ -34,9 +34,9 @@ Vlow uses **actions** to update one or more **stores** which updates the state o
 In turn, a component triggers an action. Vlow can be used for keeping a global state.
 
 There are three steps which need to be understood to use Vlow:
-1. [Create Actions](@create-actions)
-2. [Create Stores](@create-a-store)
-3. [Map store(s) to Components](@map-stores-to-components)
+1. [Create Actions](#create-actions)
+2. [Create Stores](#create-a-store)
+3. [Map store(s) to Components](#map-stores-to-components)
 
 
 ## Create actions
