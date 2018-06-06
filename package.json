@@ -1,8 +1,8 @@
 {
   "name": "vlow",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
-  "main": "vlow.js",
+  "main": "dist/vlow.js",
   "scripts": {
     "test": "mocha --require babel-core/register",
     "build:dev": "webpack -d --progress --profile --colors",

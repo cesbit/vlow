@@ -24,7 +24,7 @@ import Component from './lib/component';
 import {createActions} from './lib/actions';
 
 const Vlow = {
-    version: '1.0.0',
+    version: '1.0.1',
 };
 
 Vlow.Store = Store;
