@@ -21,7 +21,7 @@
  */
 import Store from './lib/store';
 import Component from './lib/component';
-import {Actions, createActions} from './lib/actions';
+import {createActions} from './lib/actions';
 
 const Vlow = {
     version: '1.0.0',
@@ -29,7 +29,6 @@ const Vlow = {
 
 Vlow.Store = Store;
 Vlow.Component = Component;
-Vlow.Actions = Actions;
 Vlow.createActions = createActions;
 
 export default Vlow;
