@@ -167,9 +167,10 @@ this.mapStore({store: ExampleStore, alState: (state) => {
 
 ### Alternative super class
 By default the `Vlow.Component` class extends the `React.Component` class but you might want `Vlow.Component` to extend your own
-custom class. This is possible by using `.extend()`, for example we could extend `React.PureComponent` the following way:
+custom class. This is possible by using `Vlow.Component..extend()`.
 
 ```javascript
+// In this example we create a Vlow Component which extends React.PureComponent instead of the default React.Component
 class MyComponent extends Vlow.Component.extend(React.PureComponent) {
     ...
 }
