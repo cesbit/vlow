@@ -24,6 +24,7 @@ In your project:
 ```javascript
 import Vlow from 'vlow';
 // Exposes:
+//  - Vlow.version
 //  - Vlow.createActions
 //  - Vlow.Store
 //  - Vlow.Component
