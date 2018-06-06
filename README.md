@@ -1,6 +1,29 @@
 # Vlow
 A simple library for unidirectional dataflow architecture inspired by Reflux
 
+---------------------------------------
+  * [Installation](#installation)
+  * [Overview](#overview)
+  * [Create actions](@create-actions)
+  * [Create a store](@create-a-store)
+  * [Map stores to Components](@map-stores-to-components)
+    * [Using altState](@using-altstate)
+
+---------------------------------------
+
+## Installation
+Using npm:
+
+```
+$ npm i vlow
+```
+
+In your project:
+
+```javascript
+import Vlow from 'vlow';
+```
+
 ## Overview
 Vlow uses **actions** to update one or more **stores** which updates the state of all **components** who are mapped to the store.
 In turn, a component triggers an action. Vlow can be used for keeping a global state.
@@ -119,7 +142,7 @@ this.mapStores([
 ]);
 ```
 
-### Using altState()
+### Using altState
 Sometimes you want to apply other state to a component be still listen to state changes in a store. This can be
 done by using an `altState(state)` hook which will be triggered on state changes in the store but before the
 component state is changed. The altState function should return the state changes you want to make or `null` in case
