@@ -8,6 +8,7 @@ A simple library for unidirectional dataflow architecture inspired by Reflux
   * [Create a store](@create-a-store)
   * [Map stores to Components](@map-stores-to-components)
     * [Using altState](@using-altstate)
+    * [Alternative super class](@alternative-super-class)
 
 ---------------------------------------
 
@@ -22,6 +23,10 @@ In your project:
 
 ```javascript
 import Vlow from 'vlow';
+// Exposes:
+//  - Vlow.createActions
+//  - Vlow.Store
+//  - Vlow.Component
 ```
 
 ## Overview
@@ -29,9 +34,9 @@ Vlow uses **actions** to update one or more **stores** which updates the state o
 In turn, a component triggers an action. Vlow can be used for keeping a global state.
 
 There are three steps which need to be understood to use Vlow:
-1. Create Actions
-2. Create Stores
-3. Map stores to Components
+1. [Create Actions](@create-actions)
+2. [Create Stores](@create-a-store)
+3. [Map store(s) to Components](@map-stores-to-components)
 
 
 ## Create actions
@@ -158,5 +163,15 @@ this.mapStore({store: ExampleStore, alState: (state) => {
         items: this.state.items.filter(i => i.age > this.state.minAge)
     };
 }});
+```
 
+### Alternative super class
+By default the `Vlow.Component` class extends the `React.Component` class but you might want `Vlow.Component` to extend your own
+custom class. This is possible by using `.extend()`, for example we could extend `React.PureComponent` the following way:
+
+```javascript
+class MyComponent extends Vlow.Component.extend(React.PureComponent) {
+    ...
+}
+```
 
