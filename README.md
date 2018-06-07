@@ -31,7 +31,7 @@ import Vlow from 'vlow';
 ```
 
 ## Overview
-Vlow uses **actions** to update one or more **stores** which updates the state of all **components** who are mapped to the store.
+Vlow uses **actions** to update one or more **stores** which updates the state of all **components** who are mapped to the store(s).
 In turn, a component triggers an action. Vlow can be used for keeping a global state.
 
 There are three steps which need to be understood to use Vlow:
@@ -43,13 +43,14 @@ There are three steps which need to be understood to use Vlow:
 ## Create actions
 Actions can be created using the `Vlow.createActions` function:
 ```javascript
+// this example creates an add and remove action
 const ItemActions = Vlow.createActions([
     'add',
     'remove',
 ]);
 ```
 
-Invoking an action is a simple as calling the function, for example:
+Invoking an action is as simple as calling the function, for example:
 ```javascript
 ItemsActions.add(item);
 ```
@@ -63,7 +64,7 @@ Creating a store can be done by creating a subclass of `Vlow.Store` and call the
 class ItemStore extends Vlow.Store {
     constructor() {
         // Call super with the actions to which this store should listen too.
-        // Note: multiple action instances are possible, for example super(Actions1, Actions2);
+        // Note: multiple actions instances are possible, for example super(Actions1, Actions2);
         super(ItemActions);
 
         // Create the initial state
@@ -72,17 +73,15 @@ class ItemStore extends Vlow.Store {
         };
     }
 
-    // Implement onAction functions for each action defined by actions.
-    // (It is not required to create the on.. functions but usually you want to)
+    // Implement onAction functions for each action defined by actions. It is not
+    // required to create functions for all actions but usually you want to do this.
     onAdd(item) {
         // Update the state like you would do with React.
         // Just like react the first argument can also be a function.
         //
-        // A second argument is also accepted. When using a second argument in a
-        // React Component, the argument is a callback which is triggered as soon as
-        // the Component is rendered. In case of a Vlow.Store, it is is also a callback
-        // but is triggered only once when all components which are mapped to the store
-        // are rendered.
+        // An optional second argument can be used. When given it must be a callback
+        // function() which will be called once when all components which are mapped
+        // to the store are rendered.
         this.setState({items: [...this.state.items, item]});
     }
 
