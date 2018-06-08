@@ -1,6 +1,6 @@
 {
   "name": "vlow",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
   "main": "dist/vlow.js",
   "scripts": {

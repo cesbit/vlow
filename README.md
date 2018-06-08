@@ -31,8 +31,9 @@ import Vlow from 'vlow';
 ```
 
 ## Overview
-Vlow uses **actions** to update one or more **stores** which updates the state of all **components** who are mapped to the store(s).
-In turn, a component triggers an action. Vlow can be used for keeping a global state.
+Vlow uses **actions** to update one or more **stores** which updates the state
+of all **components** who are mapped to the store(s). In turn, a component
+triggers an action. Vlow can be used for keeping a global state.
 
 There are three steps which need to be understood to use Vlow:
 1. [Create Actions](#create-actions)
@@ -59,11 +60,13 @@ ItemsActions.add(item);
 A Vlow Store is an object which holds a global state which can be shared across
 components.
 
-Creating a store can be done by creating a subclass of `Vlow.Store` and call the Store constructor with an actions object, for example:
+Creating a store can be done by creating a subclass of `Vlow.Store` and call
+the Store constructor with an actions object, for example:
 ```javascript
 class ItemStore extends Vlow.Store {
     constructor() {
-        // Call super with the actions to which this store should listen too.
+        // Call super with the actions to which this store should
+        // listen too.
         // Note: multiple actions instances are possible,
         //       for example super(Actions1, Actions2);
         super(ItemActions);
@@ -95,51 +98,61 @@ class ItemStore extends Vlow.Store {
 ```
 
 ## Map stores to Components
-Now that the actions and stores are created, it is time to map them to a component.
+Now that the actions and stores are created, it is time to map them to a
+component.
 
-This is done by extending the `Vlow.Component` class instead of `React.Component`.
-Inside the `constructor` you should use the `mapStore()` or `mapStores()` function to
-map the state to the store.
+This is done by extending the `Vlow.Component` class instead of
+`React.Component`. Inside the `constructor` you should use the `mapStore()` or
+`mapStores()` function to map the state to the store.
 
 ```javascript
 class ItemComponent extends Vlow.Component {
     constructor(props) {
         super(props);
-        // In case you want to set state in the constructor, make sure
-        // to do this before calling mapStore() since you otherwise
-        // would overwrite the state defined by the store.
+        // In case you want to set state in the constructor, make
+        // sure to do this before calling mapStore() since you
+        // otherwise would overwrite the state defined by the store.
         this.state = {
             some: 'state'
         };
 
-        // Function mapStore() accepts a store in which case the complete store state
-        // will be mapped to the components state. There are two more options:
+        // Function mapStore() accepts a store in which case the
+        // complete store state will be mapped to the components state.
+        // There are two more options:
         //
-        // - Using a keys filter in which case a component only listens to certain store changes.
+        // - Using a keys filter in which case a component only listens
+        //   to certain store changes.
         //
         //      this.mapStore({
         //          store: ItemStore,
-        //          keys: ['items'] // listen only to 'items' changes, other store state will be ignored
+        //          keys: ['items'] // listen only to 'items' changes,
+        //                          // other store state will be ignored
         //      });
         //
-        // - Using an altState function which allows you to modify state before it will be applied.
-        //   (more info on altState() can be found in the documentation)
+        // - Using an altState function which allows you to modify state
+        //   before it will be applied. (more info on altState() can be
+        //   found later in this documentation)
         this.mapStore(ItemStore);
 
-        // The state now looks like: {some: 'state', items: []} and it is fine
-        // to add *things* to the state as long as you do not overwrite the this.state
-        // Object itself. for example:
+        // The state now looks like:
+        //    {some: 'state', items: []}
+        // It's ok to modify the state as long as you do not
+        // overwrite `this.state` with a new Object, for example:
         this.state.hasItems = this.state.items.length > 0;
     }
 
     render {
-        return <ul>{this.state.items.map(i => <li key={i.id}>{i.text}</li>)}</ul>;
+        return (
+            <ul>
+                {this.state.items.map(i => <li key={i.id}>{i.text}</li>)}
+            </ul>
+        );
     }
 }
 ```
 
-In case you need multiple stores, the function `this.mapStores([])` can be used which accepts an Array of stores.
-Each store may be defined in a different way.
+In case you need multiple stores, the function `this.mapStores([])` can be used
+which accepts an Array of stores. Each store may be defined in a different way.
 ```javascript
 this.mapStores([
     StoreOne, {
@@ -155,26 +168,35 @@ this.mapStores([
 ```
 
 ### Using altState
-Sometimes you want to apply other state to a component be still listen to state changes in a store. This can be
-done by using an `altState(state)` hook which will be triggered on state changes in the store but before the
-component state is changed. The altState function should return the state changes you want to make or `null` in case
-you don't want to update the state of the component.
+Sometimes you want to apply other state to a component be still listen to state
+changes in a store. This can be done by using an `altState(state)` hook which
+will be triggered on state changes in the store but before the component state
+is changed. The altState function should return the state changes you want to
+make or `null` in case you don't want to update the state of the component.
 ```javascript
 this.mapStore({store: ExampleStore, alState: (state) => {
+    // The `state` is received from the store. This is not the
+    // components state. This function should return the state
+    // you want to apply on `this` component. The function can
+    // also return `null` in which case the component will not
+    // receive the state changes.
     if (this.state.status === 'error') {
-        return null;  // We can ignore state changes based on the store state
+        // this component will not receive the state changes
+        return null;
     }
-    // We can alter the state for this component. Other components still
-    // receive the un-modified state from the store.
+    // Return some alternative state for `this` component.
+    // Other components still receive the `normal` state
+    // from the store.
     return {
-        items: this.state.items.filter(i => i.age > this.state.minAge)
+        items: state.items.filter(i => i.age > this.state.minAge)
     };
 }});
 ```
 
 ### Alternative super class
-By default the `Vlow.Component` class extends the `React.Component` class but you might want `Vlow.Component` to extend your own
-custom class. This is possible by using `Vlow.Component.extend()`.
+By default the `Vlow.Component` class extends the `React.Component` class but
+you might want `Vlow.Component` to extend your own custom class. This is
+possible by using `Vlow.Component.extend()`.
 
 ```javascript
 // In this example we create a Vlow Component which extends
