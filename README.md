@@ -64,7 +64,8 @@ Creating a store can be done by creating a subclass of `Vlow.Store` and call the
 class ItemStore extends Vlow.Store {
     constructor() {
         // Call super with the actions to which this store should listen too.
-        // Note: multiple actions instances are possible, for example super(Actions1, Actions2);
+        // Note: multiple actions instances are possible,
+        //       for example super(Actions1, Actions2);
         super(ItemActions);
 
         // Create the initial state
@@ -73,15 +74,17 @@ class ItemStore extends Vlow.Store {
         };
     }
 
-    // Implement onAction functions for each action defined by actions. It is not
-    // required to create functions for all actions but usually you want to do this.
+    // Implement onAction functions for each action defined by actions.
+    // It is not required to create functions for all actions but usually
+    // this is what you want and Vlow logs a warning in `development` mode
+    // when actions are not implemented.
     onAdd(item) {
         // Update the state like you would do with React.
         // Just like react the first argument can also be a function.
         //
-        // An optional second argument can be used. When given it must be a callback
-        // function() which will be called once when all components which are mapped
-        // to the store are rendered.
+        // An optional second argument can be used. When given it must be
+        // a callback function() which will be called once when all
+        // components which are mapped to the store are rendered.
         this.setState({items: [...this.state.items, item]});
     }
 
@@ -102,9 +105,9 @@ map the state to the store.
 class ItemComponent extends Vlow.Component {
     constructor(props) {
         super(props);
-        // In case you want to set state in the constructor, make sure to do this
-        // before calling mapStore() since you otherwise would overwrite the state
-        // defined by the store.
+        // In case you want to set state in the constructor, make sure
+        // to do this before calling mapStore() since you otherwise
+        // would overwrite the state defined by the store.
         this.state = {
             some: 'state'
         };
@@ -161,8 +164,8 @@ this.mapStore({store: ExampleStore, alState: (state) => {
     if (this.state.status === 'error') {
         return null;  // We can ignore state changes based on the store state
     }
-    // We can alter the state for this component. Other components still receive the
-    // un-modified state from the store.
+    // We can alter the state for this component. Other components still
+    // receive the un-modified state from the store.
     return {
         items: this.state.items.filter(i => i.age > this.state.minAge)
     };
@@ -174,8 +177,8 @@ By default the `Vlow.Component` class extends the `React.Component` class but yo
 custom class. This is possible by using `Vlow.Component.extend()`.
 
 ```javascript
-// In this example we create a Vlow Component which extends React.PureComponent
-// instead of the default React.Component
+// In this example we create a Vlow Component which extends
+// React.PureComponent instead of the default React.Component
 class MyComponent extends Vlow.Component.extend(React.PureComponent) {
     ...
 }
