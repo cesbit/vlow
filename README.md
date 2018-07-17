@@ -30,6 +30,13 @@ import Vlow from 'vlow';
 //  - Vlow.Component
 ```
 
+Or... download the latest release from [here](https://github.com/transceptor-technology/vlow/releases/latest) and load the file in inside your project.
+For example:
+```html
+<!-- Add this line to the <head> section to expose window.Vlow -->
+<script src="vlow.min.js"></script>
+```
+
 ## Overview
 Vlow uses **actions** to update one or more **stores** which updates the state
 of all **components** who are mapped to the store(s). In turn, a component
