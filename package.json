@@ -2,11 +2,12 @@
   "name": "vlow",
   "version": "1.0.4",
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
-  "main": "dist/vlow.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "mocha --require babel-core/register",
     "build:dev": "webpack -d --progress --profile --colors",
-    "build:prod": "NODE_ENV='production' webpack -p --progress --profile --colors"
+    "build:prod": "NODE_ENV='production' webpack -p --progress --profile --colors",
+    "babel": "npx babel src --out-dir lib && cp src/index.d.ts lib/ && echo \">WARNING: This \\`lib\\` folder is generated with \\`npm run babel\\` and should not be modified!\" > lib/README.md "
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   "homepage": "https://github.com/transceptor-technology/vlow#readme",
   "dependencies": {},
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",

@@ -1,13 +1,13 @@
-/* global require, __dirname, module */
+/* global require, __dirname, module, process */
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = {
     mode: 'production',
-    entry: './index.js',
+    entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'vlow.js',
+        filename: process.env.NODE_ENV === 'production' ? 'vlow.min.js' : 'vlow.js',
         library: 'vlow',
         libraryTarget: 'umd'
     },

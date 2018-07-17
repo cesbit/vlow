@@ -19,9 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import Store from './lib/store';
-import Component from './lib/component';
-import {createActions} from './lib/actions';
+import Store from './store';
+import Component from './component';
+import {createActions} from './actions';
 
 const Vlow = {
     version: '1.0.4',

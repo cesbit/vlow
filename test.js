@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import assert from 'assert';
-import Vlow from './index';
+import Vlow from './src/index';
 
 
 let TestActions = Vlow.createActions(['add', 'pop']);
