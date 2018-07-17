@@ -33,7 +33,8 @@ import Vlow from 'vlow';
 Or... download the latest release from [here](https://github.com/transceptor-technology/vlow/releases/latest) and load the file in inside your project.
 For example:
 ```html
-<!-- Add this line to the <head> section to expose window.Vlow -->
+<!-- Add this line to expose `window.vlow.default` -->
+<!-- WARN: Make sure React is loaded before this line -->
 <script src="vlow.min.js"></script>
 ```
 
