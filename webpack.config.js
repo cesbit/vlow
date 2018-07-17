@@ -9,11 +9,11 @@ const config = {
         path: path.resolve(__dirname, './dist'),
         filename: 'vlow.js',
         library: 'vlow',
-        libraryTarget: 'commonjs2'
+        libraryTarget: 'umd'
     },
     module: {
         rules: [{
-            test: /\.(js)$/,
+            test: /\.js/,
             exclude: /node_modules/,
             loader: 'babel-loader',
         }],
