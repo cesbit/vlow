@@ -176,24 +176,25 @@ this.mapStores([
 ```
 
 ### Using altState
-Sometimes you want to apply other state to a component be still listen to state
-changes in a store. This can be done by using an `altState(state)` hook which
+Sometimes you want to listen to state changes in a store but then do something
+with this state instead of just applying the state to a component. 
+This can be done by using an `altState(state)` hook which
 will be triggered on state changes in the store but before the component state
-is changed. The altState function should return the state changes you want to
+is changed. The `altState` function should return the state changes you want to
 make or `null` in case you don't want to update the state of the component.
 ```javascript
 this.mapStore({store: ExampleStore, alState: (state) => {
     // The `state` is received from the store. This is not the
     // components state. This function should return the state
     // you want to apply on `this` component. The function can
-    // also return `null` in which case the component will not
-    // receive the state changes.
+    // also return `null` in which case the components state 
+    // will not be changed.
     if (this.state.status === 'error') {
-        // this component will not receive the state changes
+        // the components state will not be changed
         return null;
     }
     // Return some alternative state for `this` component.
-    // Other components still receive the `normal` state
+    // Other components still receive the `original` state
     // from the store.
     return {
         items: state.items.filter(i => i.age > this.state.minAge)
