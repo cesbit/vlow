@@ -149,7 +149,7 @@ class ItemComponent extends Vlow.Component {
         this.state.hasItems = this.state.items.length > 0;
     }
 
-    render {
+    render() {
         return (
             <ul>
                 {this.state.items.map(i => <li key={i.id}>{i.text}</li>)}
