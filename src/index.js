@@ -22,14 +22,16 @@
 import Store from './store';
 import Component from './component';
 import {createActions} from './actions';
+import withVlow from '.withVlow';
 
 const Vlow = {
-    version: '1.0.4',
+    version: '1.0.5',
 };
 
 Vlow.Store = Store;
 Vlow.Component = Component;
 Vlow.createActions = createActions;
+Vlow.withVlow = withVlow;
 
 export default Vlow;
 

@@ -28,6 +28,7 @@ import Vlow from 'vlow';
 //  - Vlow.createActions
 //  - Vlow.Store
 //  - Vlow.Component
+//  - Vlow.withVlow
 ```
 
 Or... download the latest release from [here](https://github.com/transceptor-technology/vlow/releases/latest) and load the file in inside your project.
@@ -109,8 +110,60 @@ class ItemStore extends Vlow.Store {
 Now that the actions and stores are created, it is time to map them to a
 component.
 
-This is done by extending the `Vlow.Component` class instead of
-`React.Component`. Inside the `constructor` you should use the `mapStore()` or
+This can be done either by using `Vlow.withVlow` which is the preferred method
+as of version 1.1.0, or it can be done by extending the `Vlow.Component` class.
+
+### Using withVlow
+By using `withVlow` the store will be mapped to the component props.
+The function `withVlow` requires two arguments. The first argument should
+be a Vlow Store or an array with multiple stores. The second argument should
+be the component you want to wrap.
+
+Here are some valid examples:
+
+```javascript
+// Just parse the store
+withVlow(SomeStore, MyComponent);
+
+// Multiple stores
+withVlow([SomeStore, SomeOtherStore], MyComponent);
+
+// Map only specific store keys
+withVlow({
+    store: ItemStore,
+    keys: ['items'] // listen only to 'items' changes
+}, MyComponent);
+```
+
+And this is an example of how `withVlow` can be used:
+```javascript
+import {withVlow} from 'vlow';
+import ItemStore from '../Stores/ItemStore';
+
+const ItemComponent = ({items}) => (
+    <ul>
+        {items.map(i => <li key={i.id}>{i.text}</li>)}
+    </ul>
+)
+
+export default withVlow(ItemStore, ItemComponent);
+```
+
+>Note: It is still ok to use `PropTypes` for checking the props from a store
+>for example:
+>```javascript
+>ItemComponent.propTypes = {
+>    items: PropTypes.arrayOf(PropTypes.shape({
+>        id: Proptypes.number,
+>        text: PropTypes.string
+>    }))
+>};
+>```
+
+### Using Vlow.Component
+Instead of assigning the store to props, it can also be assigned directly to
+the state by extending `Vlow.Component` instead of `React.Component`.
+Inside the `constructor` you should use the `mapStore()` or
 `mapStores()` function to map the state to the store.
 
 ```javascript
@@ -149,7 +202,7 @@ class ItemComponent extends Vlow.Component {
         this.state.hasItems = this.state.items.length > 0;
     }
 
-    render {
+    render() {
         return (
             <ul>
                 {this.state.items.map(i => <li key={i.id}>{i.text}</li>)}
@@ -177,7 +230,7 @@ this.mapStores([
 
 ### Using altState
 Sometimes you want to listen to state changes in a store but then do something
-with this state instead of just applying the state to a component. 
+with this state instead of just applying the state to a component.
 This can be done by using an `altState(state)` hook which
 will be triggered on state changes in the store but before the component state
 is changed. The `altState` function should return the state changes you want to
@@ -187,9 +240,9 @@ this.mapStore({store: ExampleStore, alState: (state) => {
     // The `state` is received from the store. This is not the
     // components state. This function should return the state
     // you want to apply on `this` component. The function can
-    // also return `null` in which case the components state 
+    // also return `null` in which case the components state
     // will not be changed.
-    if (this.state.status === 'error') {
+    if (this.props.status === 'error') {
         // the components state will not be changed
         return null;
     }
