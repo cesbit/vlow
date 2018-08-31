@@ -151,7 +151,7 @@ const ItemComponent = ({items}) => (
 export default withVlow(ItemStore, ItemComponent);
 ```
 
->Note: It is still ok to use `PropTypes` for checking the props from a store
+>Note: It is still ok to use `PropTypes` for checking the props from a store,
 >for example:
 >```javascript
 >ItemComponent.propTypes = {
