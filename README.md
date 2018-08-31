@@ -156,9 +156,9 @@ export default withVlow(ItemStore, ItemComponent);
 >```javascript
 >ItemComponent.propTypes = {
 >    items: PropTypes.arrayOf(PropTypes.shape({
->        id: Proptypes.number,
+>        id: PropTypes.number,
 >        text: PropTypes.string
->    }))
+>    })).isRequired
 >};
 >```
 
