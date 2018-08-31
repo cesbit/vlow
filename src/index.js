@@ -22,10 +22,10 @@
 import Store from './store';
 import Component from './component';
 import {createActions} from './actions';
-import withVlow from '.withVlow';
+import withVlow from './withVlow';
 
 const Vlow = {
-    version: '1.0.5',
+    version: '1.1.0',
 };
 
 Vlow.Store = Store;

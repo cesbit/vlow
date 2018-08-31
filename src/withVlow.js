@@ -1,16 +1,17 @@
+import React from 'react';
 import Component from './component';
 
-const withVlow = (store, WrappedComponent) => {
+const withVlow = (storeDef, WrappedComponent) => {
     const WithVlow = class extends Component {
         constructor(props) {
             super(props);
-            if (!Array.isArray(store)) {
-                store = [store];
+            if (!Array.isArray(storeDef)) {
+                storeDef = [storeDef];
             }
-            this.mapStores(store);
+            this.mapStores(storeDef);
         }
         render() {
-            return <WrappedComponent {...this.props} {...this.state} />;
+            return React.createElement(WrappedComponent, [...this.props, ...this.state], null);
         }
     };
     WithVlow.displayName = `WithVlow(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;

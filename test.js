@@ -42,6 +42,8 @@ class TestComponent extends Vlow.Component {
     }
 }
 
+const TestWithComponent = Vlow.withVlow(TestStore, () => null);
+
 class SomeClass extends React.Component {
     isSomeClass() {
         return true;
@@ -90,6 +92,36 @@ describe('Test Vlow.createActions', () => {
 
 describe('Test Vlow.Component', () => {
     const component = new TestComponent();
+
+    it('Initial items should return empty', () => {
+        assert.deepEqual(component.state.items, []);
+    });
+
+    it('Add action should add items to the store', () => {
+        TestActions.add(item0);
+        TestActions.add(item1);
+        assert.equal(component.state.items.length, 2);
+    });
+
+    it('Pop action should remove the last item from the store', () => {
+        assert.equal(component.state.items.length, 2);
+        TestActions.pop();
+        TestActions.pop();
+        assert.equal(component.state.items.length, 0);
+    });
+
+    it('Component should be able to mount', () => {
+        assert.doesNotThrow(() => { component.componentWillMount(); });
+    });
+
+
+    it('Component should unmount', () => {
+        assert.doesNotThrow(() => { component.componentWillUnmount(); });
+    });
+});
+
+describe('Test withVlow', () => {
+    const component = new TestWithComponent();
 
     it('Initial items should return empty', () => {
         assert.deepEqual(component.state.items, []);

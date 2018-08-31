@@ -7,8 +7,10 @@ A simple library for unidirectional dataflow architecture inspired by Reflux
   * [Create actions](#create-actions)
   * [Create a store](#create-a-store)
   * [Map stores to Components](#map-stores-to-components)
+    * [Using withVlow](#using withVlow)
+    * [Using Vlow Component](#using-vlow-component)
+        * [Alternative super class](#alternative-super-class)
     * [Using altState](#using-altstate)
-    * [Alternative super class](#alternative-super-class)
 
 ---------------------------------------
 
@@ -160,7 +162,7 @@ export default withVlow(ItemStore, ItemComponent);
 >};
 >```
 
-### Using Vlow.Component
+### Using Vlow Component
 Instead of assigning the store to props, it can also be assigned directly to
 the state by extending `Vlow.Component` instead of `React.Component`.
 Inside the `constructor` you should use the `mapStore()` or
@@ -228,6 +230,21 @@ this.mapStores([
 ]);
 ```
 
+
+#### Alternative super class
+By default the `Vlow.Component` class extends the `React.Component` class but
+you might want `Vlow.Component` to extend your own custom class. This is
+possible by using `Vlow.Component.extend()`.
+
+```javascript
+// In this example we create a Vlow Component which extends
+// React.PureComponent instead of the default React.Component
+class MyComponent extends Vlow.Component.extend(React.PureComponent) {
+    ...
+}
+```
+
+
 ### Using altState
 Sometimes you want to listen to state changes in a store but then do something
 with this state instead of just applying the state to a component.
@@ -253,18 +270,5 @@ this.mapStore({store: ExampleStore, alState: (state) => {
         items: state.items.filter(i => i.age > this.state.minAge)
     };
 }});
-```
-
-### Alternative super class
-By default the `Vlow.Component` class extends the `React.Component` class but
-you might want `Vlow.Component` to extend your own custom class. This is
-possible by using `Vlow.Component.extend()`.
-
-```javascript
-// In this example we create a Vlow Component which extends
-// React.PureComponent instead of the default React.Component
-class MyComponent extends Vlow.Component.extend(React.PureComponent) {
-    ...
-}
 ```
 
