@@ -31,6 +31,7 @@ const Vlow = {
 Vlow.Store = Store;
 Vlow.Component = Component;
 Vlow.createActions = createActions;
+Vlow.withVlow = withVlow;
 
 export {Store, Component, createActions, withVlow};
 export default Vlow;

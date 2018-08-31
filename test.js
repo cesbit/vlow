@@ -7,6 +7,7 @@
 import React from 'react';
 import assert from 'assert';
 import Vlow from './src/index';
+import {withVlow} from './src/index';
 
 
 let TestActions = Vlow.createActions(['add', 'pop']);
@@ -42,7 +43,7 @@ class TestComponent extends Vlow.Component {
     }
 }
 
-const TestWithComponent = Vlow.withVlow(TestStore, () => null);
+const TestWithComponent = withVlow(TestStore, () => null);
 
 class SomeClass extends React.Component {
     isSomeClass() {
