@@ -21,15 +21,15 @@ const ComponentFactory = (SuperClass) => {
             if (process.env.NODE_ENV !== 'production') {
                 invariant(store.constructor !== Array, 'Component `%s` is registering a store using an Array, most likely you are using `.mapStore()` instead of `.mapStores()`.', this.constructor.name);
                 if (typeof store !== 'function') {
-                    let invalidProps = Object.keys(store).filter(k => k !== 'store' && k !== 'keys' && k !== 'altState');
+                    const invalidProps = Object.keys(store).filter(k => k !== 'store' && k !== 'keys' && k !== 'altState');
                     invariant(!invalidProps.length, 'Component `%s` is registering a store using invalid properties: `%s` (only `store`, `keys` and `altState` are allowed).', this.constructor.name, invalidProps);
                 }
             }  // End debug
-            let keys = store.keys;
-            let altState = store.altState;
+            const keys = store.keys;
+            const altState = store.altState;
             keys && altState ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Component `%s` is registering a store using both `keys` and `altState` but they cannot be used at the same time.', this.constructor.name) : invariant(false) : undefined;
             store = Store._vlowGetOrCreateStore((typeof store === 'function') ? store : store.store);
-            let id = store._vlowAddListener(this, keys, altState);
+            const id = store._vlowAddListener(this, keys, altState);
             this._vlowStores_[id] = store;
             this._vlowTmpState = this.state;
         }
@@ -53,7 +53,7 @@ const ComponentFactory = (SuperClass) => {
 
         componentWillUnmount() {
             this._vlowState_ = States.stop;
-            Object.entries(this._vlowStores_).forEach(([id, store]) => store._vlowRemoveListener(id));
+            Object.keys(this._vlowStores_).forEach(id => this._vlowStores_[id]._vlowRemoveListener(id));
         }
     }
 

@@ -1,12 +1,9 @@
 {
     "presets": [
-        "env"
+        "@babel/preset-env"
     ],
     "plugins": [
-        "transform-class-properties",
-        "transform-object-entries",
-        "transform-object-rest-spread",
-        "syntax-dynamic-import",
-        "transform-es2015-classes"
+        "@babel/plugin-transform-object-assign",
+        ["@babel/plugin-transform-runtime", {"corejs": false}]
     ]
 }

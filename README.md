@@ -117,24 +117,23 @@ as of version 1.1.0, or it can be done by extending the `Vlow.Component` class.
 
 ### Using withVlow
 By using `withVlow` the store will be mapped to the component props.
-The function `withVlow` requires two arguments. The first argument should
-be a Vlow Store or an array with multiple stores. The second argument should
-be the component you want to wrap.
+The function `withVlow` requires a Vlow Store or an array with multiple stores
+and returns a new function which accepts a component you want to wrap.
 
 Here are some valid examples:
 
 ```javascript
 // Just parse the store
-withVlow(SomeStore, MyComponent);
+withVlow(SomeStore)(MyComponent);
 
 // Multiple stores
-withVlow([SomeStore, SomeOtherStore], MyComponent);
+withVlow([SomeStore, SomeOtherStore])(MyComponent);
 
 // Map only specific store keys
 withVlow({
     store: ItemStore,
     keys: ['items'] // listen only to 'items' changes
-}, MyComponent);
+})(MyComponent);
 ```
 
 And this is an example of how `withVlow` can be used:
@@ -148,7 +147,7 @@ const ItemComponent = ({items}) => (
     </ul>
 )
 
-export default withVlow(ItemStore, ItemComponent);
+export default withVlow(ItemStore)(ItemComponent);
 ```
 
 >Note: It is still ok to use `PropTypes` for checking the props from a store,

@@ -10,7 +10,8 @@ import Vlow from './src/index';
 import {withVlow} from './src/index';
 
 
-let TestActions = Vlow.createActions(['add', 'pop']);
+const TestActions = Vlow.createActions(['add', 'pop']);
+
 class TestStore extends Vlow.Store {
     constructor() {
         super(TestActions);
@@ -43,7 +44,7 @@ class TestComponent extends Vlow.Component {
     }
 }
 
-const TestWithComponent = withVlow(TestStore, () => null);
+const TestWithComponent = withVlow(TestStore)(() => null);
 
 class SomeClass extends React.Component {
     isSomeClass() {
@@ -61,8 +62,8 @@ class TestExtendedComponent extends Vlow.Component.extend(SomeClass) {
     }
 }
 
-var item0 = {id: 0, name: 'foo'};
-var item1 = {id: 2, name: 'oof'};
+const item0 = {id: 0, name: 'foo'};
+const item1 = {id: 2, name: 'oof'};
 
 describe('Test Vlow.createActions', () => {
 
@@ -188,7 +189,7 @@ describe('Test Exception when overwriting state', () => {
             this.state = {};
         }
     }
-    let component = new Component();
+    const component = new Component();
 
     it('Raise when will mount is called', () => {
         assert.throws(() => component.componentWillMount());
@@ -218,7 +219,7 @@ describe('Test alter state', () => {
         }
     }
 
-    let component = new Component();
+    const component = new Component();
 
     it('Component len state property should be set', () => {
         TestActions.add(item0);
