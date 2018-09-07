@@ -162,10 +162,15 @@ export default withVlow(ItemStore)(ItemComponent);
 >```
 
 ### Using Vlow Component
-Instead of assigning the store to props, it can also be assigned directly to
-the state by extending `Vlow.Component` instead of `React.Component`.
+It is recommended to use [withVlow](#using-withvlow) instead of `Vlow.Component`
+but in some cases you might prefer to extend your component directly with a `Vlow.Component` instead of `React.Component`.
+The main difference is that the *state* from the store will be merged with your
+components state, instead of receiving the *state* by props.
+
 Inside the `constructor` you should use the `mapStore()` or
 `mapStores()` function to map the state to the store.
+
+Here is an example of how to use `Vlow.Component`:
 
 ```javascript
 class ItemComponent extends Vlow.Component {
