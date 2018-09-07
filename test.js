@@ -12,13 +12,59 @@ import {withVlow} from './src/index';
 
 const TestActions = Vlow.createActions(['add', 'pop']);
 
+const storeInstanceCount = {
+    count: 0,
+    closed: 0,
+};
+
 class TestStore extends Vlow.Store {
+
+    static isNonPersistent = true;
+    static listenTo = TestActions;
+
     constructor() {
-        super(TestActions);
+        super();
         this.state = {
             items: []
         };
+        storeInstanceCount.count++;
     }
+
+    onAdd(item) {
+        this.setState({
+            items: [...this.state.items, item]
+        });
+    }
+
+    onPop() {
+        if (this.state.items.length) {
+            this.setState({
+                items: this.state.items.slice(0, -1)
+            });
+        }
+    }
+
+    storeWillClose() {
+        storeInstanceCount.closed++;
+    }
+}
+
+class TestStorePersistent extends Vlow.Store {
+
+    static listenTo = TestActions;
+
+    constructor() {
+        super();
+        this.state = {
+            items: []
+        };
+        storeInstanceCount.count++;
+    }
+
+    storeWillClose() {
+        //assert(false, 'this store is persistent and should never be closed');
+    }
+
     onAdd(item) {
         this.setState({
             items: [...this.state.items, item]
@@ -38,6 +84,16 @@ class TestComponent extends Vlow.Component {
     constructor(props) {
         super(props);
         this.mapStore(TestStore);
+    }
+    render() {
+        return null;
+    }
+}
+
+class TestComponentPersistent extends Vlow.Component {
+    constructor(props) {
+        super(props);
+        this.mapStore(TestStorePersistent);
     }
     render() {
         return null;
@@ -94,6 +150,7 @@ describe('Test Vlow.createActions', () => {
 
 describe('Test Vlow.Component', () => {
     const component = new TestComponent();
+    const componentPersistent = new TestComponentPersistent();
 
     it('Initial items should return empty', () => {
         assert.deepEqual(component.state.items, []);
@@ -103,6 +160,10 @@ describe('Test Vlow.Component', () => {
         TestActions.add(item0);
         TestActions.add(item1);
         assert.equal(component.state.items.length, 2);
+    });
+
+    it('Other comopent should have equal state', () => {
+        assert.equal(componentPersistent.state.items.length, 2);
     });
 
     it('Pop action should remove the last item from the store', () => {
@@ -226,7 +287,17 @@ describe('Test alter state', () => {
         assert.equal(component.state.len, 1);
     });
 
-    it('Component should unmount', () => {
+    it('Component should unmount and persistent stores should be checked', () => {
+        component.componentWillUnmount()
         assert.doesNotThrow(() => component.componentWillUnmount());
+
+        assert.equal(storeInstanceCount.count, 2);
+
+        new TestComponent();
+        assert.equal(storeInstanceCount.count, 3);
+
+        new TestComponentPersistent();
+        assert.equal(storeInstanceCount.count, 3);
     });
+
 });

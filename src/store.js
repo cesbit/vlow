@@ -1,4 +1,5 @@
 /* global process */
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import States from './states';
 import invariant from 'fbjs/lib/invariant';
 
@@ -6,11 +7,11 @@ const _stores = [];
 
 
 class Store {
-    constructor(...actions) {
+    constructor() {
         this._vlowLastId_ = 0;
         this._vlowListeners_ = {};
         this.state = this.state || {};  // ensure state, may be overwritten in SubClass constructor
-        actions.forEach(a => a._addStore(this));
+        this._vlowGetActions().forEach(a => a._addStore(this));
     }
 
     setState(newState, cb) {
@@ -35,6 +36,15 @@ class Store {
         })();
 
         listeners.forEach(listener => this._vlowSetState(listener, newState, counter));
+    }
+
+    storeWillClose() { }
+
+    _vlowGetActions() {
+        let actions = this.constructor.listenTo || [];
+        actions = Array.isArray(actions) ? actions : [actions];
+        !actions.length && process.env.NODE_ENV !== 'production' && console.warn('Store `%s` has no actions to listen to, use `Vlow.createActions()` to create actions and then assign them by adding `static actions = ...` to this store.', this.constructor.name);
+        return actions;
     }
 
     _vlowFilterState(state, keys) {
@@ -82,7 +92,7 @@ class Store {
                     for (let a in state) {
                         for (let b in component.state) {
                             if (a === b) {
-                                window.console.warn('Store `%s` will assign a duplicate key `%s` to Component `%s`.', this.constructor.name, a, component.constructor.name);
+                                console.warn('Store `%s` will assign a duplicate key `%s` to Component `%s`.', this.constructor.name, a, component.constructor.name);
                             }
                         }
                     }
@@ -97,10 +107,17 @@ class Store {
 
     _vlowRemoveListener(id) {
         delete this._vlowListeners_[id];
-        !this.isPersistentStore && Object.keys(this._vlowListeners_).length === 0 && Store._vlowDropStore(this.constructor);
+        const isNonPersistent = this.isNonPersistent !== undefined ? this.isNonPersistent : this.constructor.isNonPersistent;
+        isNonPersistent === true && Object.keys(this._vlowListeners_).length === 0 && this._vlowDropStore();
     }
 
-    static _vlowDropStore(StoreClass) {
+    _vlowDropStore() {
+        this._vlowGetActions().forEach(a => a._dropStore(this));
+        Store._vlowRemoveStore(this.constructor);
+        this.storeWillClose();
+    }
+
+    static _vlowRemoveStore(StoreClass) {
         const idx = _stores.findIndex((m) => m.class === StoreClass);
         if (idx > -1) {
             _stores.splice(idx, 1);

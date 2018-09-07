@@ -4,7 +4,7 @@
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
   "main": "lib/index.js",
   "scripts": {
-    "test": " ./node_modules/.bin/mocha --require @babel/register",
+    "test": "./node_modules/.bin/mocha --require @babel/register",
     "build:dev": "./node_modules/.bin/webpack -d --progress --profile --colors",
     "build:prod": "NODE_ENV='production' ./node_modules/.bin/webpack -p --progress --profile --colors",
     "babel": "npx babel src --out-dir lib && cp src/index.d.ts lib/ && echo \">WARNING: This \\`lib\\` folder is generated with \\`npm run babel\\` and should not be modified!\" > lib/README.md "
@@ -24,15 +24,17 @@
     "url": "https://github.com/transceptor-technology/vlow/issues"
   },
   "homepage": "https://github.com/transceptor-technology/vlow#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/runtime": "^7.0.0"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-transform-object-assign": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
-    "@babel/plugin-transform-object-assign": "^7.0.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
     "eslint": "^5.5.0",

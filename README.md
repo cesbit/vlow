@@ -7,7 +7,7 @@ A simple library for unidirectional dataflow architecture inspired by Reflux
   * [Create actions](#create-actions)
   * [Create a store](#create-a-store)
   * [Map stores to Components](#map-stores-to-components)
-    * [Using withVlow](#using withVlow)
+    * [Using withVlow](#using-withvlow)
     * [Using Vlow Component](#using-vlow-component)
         * [Alternative super class](#alternative-super-class)
     * [Using altState](#using-altstate)
@@ -107,6 +107,12 @@ class ItemStore extends Vlow.Store {
     }
 }
 ```
+
+>Note: Stores are usually created only once, as soon as at least one component
+>is mapped to the store. This means the store stays *alive* even if no
+>components are listening anymore. This behavior can be changed by making the
+>the store *non-persistent* by setting this property to the store:
+
 
 ## Map stores to Components
 Now that the actions and stores are created, it is time to map them to a

@@ -1,4 +1,5 @@
 /* global process */
+/* eslint no-console: ["error", { allow: ["warn", "error"] }] */
 import invariant from 'fbjs/lib/invariant';
 
 class Actions {
@@ -22,8 +23,19 @@ class Actions {
             if (typeof store[onKey] === 'function') {
                 this._callbacks[onKey].push(store[onKey].bind(store));
             } else if (process.env.NODE_ENV !== 'production') {
-                window.console.warn('Store `%s` is missing function `%s` (action will be ignored).', store.constructor.name, onKey);
+                console.warn('Store `%s` is missing function `%s` (action will be ignored).', store.constructor.name, onKey);
             }
+        }
+    }
+
+    _dropStore(store) {
+        for (let onKey in this._callbacks) {
+            console.log(this._callbacks[onKey]);
+            const idx = this._callbacks[onKey].find(k => k == store[onKey]);
+            if (idx > -1) {
+                this._callbacks[onKey].splice(idx, 1);
+            }
+            console.log(this._callbacks[onKey]);
         }
     }
 }
