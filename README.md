@@ -74,19 +74,25 @@ components.
 Creating a store can be done by creating a subclass of `Vlow.Store` and call
 the Store constructor with an actions object, for example:
 ```javascript
+// Each store should extend `Vlow.Store`.
 class ItemStore extends Vlow.Store {
-    constructor() {
-        // Call super with the actions to which this store should
-        // listen too.
-        // Note: multiple actions instances are possible,
-        //       for example super(Actions1, Actions2);
-        super(ItemActions);
 
-        // Create the initial state
-        this.state = {
-            items: []
-        };
-    }
+    // Specify to which actions this store should listen too.
+    static listenTo = ItemActions;  // can also be an array []
+                                    // with multiple actions
+
+    // Create the initial state.
+    state = {
+        items: []
+    };
+
+    // If you plan to use the constructor, do not forget to make
+    // the call to super(), for example:
+    //
+    //      constructor() {
+    //          super();
+    //          ...
+    //      }
 
     // Implement onAction functions for each action defined by actions.
     // It is not required to create functions for all actions but usually
@@ -97,8 +103,8 @@ class ItemStore extends Vlow.Store {
         // Just like react the first argument can also be a function.
         //
         // An optional second argument can be used. When given it must be
-        // a callback function() which will be called once when all
-        // components which are mapped to the store are rendered.
+        // a callback function() which will be called exactly once when
+        // all components which are mapped to the store are rendered.
         this.setState({items: [...this.state.items, item]});
     }
 
