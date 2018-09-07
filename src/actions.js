@@ -27,17 +27,6 @@ class Actions {
             }
         }
     }
-
-    _dropStore(store) {
-        for (let onKey in this._callbacks) {
-            console.log(this._callbacks[onKey]);
-            const idx = this._callbacks[onKey].find(k => k == store[onKey]);
-            if (idx > -1) {
-                this._callbacks[onKey].splice(idx, 1);
-            }
-            console.log(this._callbacks[onKey]);
-        }
-    }
 }
 
 const createActions = (names) => new Actions(names);

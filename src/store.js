@@ -7,11 +7,11 @@ const _stores = [];
 
 
 class Store {
-    constructor() {
+    constructor(...actions) {
         this._vlowLastId_ = 0;
         this._vlowListeners_ = {};
         this.state = this.state || {};  // ensure state, may be overwritten in SubClass constructor
-        this._vlowGetActions().forEach(a => a._addStore(this));
+        actions.forEach(a => a._addStore(this));
     }
 
     setState(newState, cb) {
@@ -36,15 +36,6 @@ class Store {
         })();
 
         listeners.forEach(listener => this._vlowSetState(listener, newState, counter));
-    }
-
-    storeWillClose() { }
-
-    _vlowGetActions() {
-        let actions = this.constructor.listenTo || [];
-        actions = Array.isArray(actions) ? actions : [actions];
-        !actions.length && process.env.NODE_ENV !== 'production' && console.warn('Store `%s` has no actions to listen to, use `Vlow.createActions()` to create actions and then assign them by adding `static actions = ...` to this store.', this.constructor.name);
-        return actions;
     }
 
     _vlowFilterState(state, keys) {
@@ -107,21 +98,6 @@ class Store {
 
     _vlowRemoveListener(id) {
         delete this._vlowListeners_[id];
-        const isNonPersistent = this.isNonPersistent !== undefined ? this.isNonPersistent : this.constructor.isNonPersistent;
-        isNonPersistent === true && Object.keys(this._vlowListeners_).length === 0 && this._vlowDropStore();
-    }
-
-    _vlowDropStore() {
-        this._vlowGetActions().forEach(a => a._dropStore(this));
-        Store._vlowRemoveStore(this.constructor);
-        this.storeWillClose();
-    }
-
-    static _vlowRemoveStore(StoreClass) {
-        const idx = _stores.findIndex((m) => m.class === StoreClass);
-        if (idx > -1) {
-            _stores.splice(idx, 1);
-        }
     }
 
     static _vlowGetOrCreateStore(StoreClass) {
