@@ -7,9 +7,20 @@ const _stores = [];
 
 
 class Store {
-    constructor(...actions) {
+    constructor() {
         this._vlowLastId_ = 0;
         this._vlowListeners_ = {};
+        let actions = this.constructor.listenTo;
+        if (arguments.length) {
+            actions !== undefined ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Store `%s` is using both `static listenTo` and a contructor with argument, you have to choose one.', this.constructor.name) : invariant(false) : undefined;
+            let len, key;
+            for (len = arguments.length, actions = new Array(len), key = 0; key < len; key++) {
+                actions[key] = arguments[key];
+            }
+        } else if (!Array.isArray(actions)) {
+            actions = actions === undefined ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Store `%s` is not listening to any actioons, please add `static listenTo = SomeActions;` to the store.', this.constructor.name) : invariant(false) : [actions];
+        }
+
         this.state = this.state || {};  // ensure state, may be overwritten in SubClass constructor
         actions.forEach(a => a._addStore(this));
     }
@@ -49,7 +60,6 @@ class Store {
 
     _vlowSetState(listener, state, counter) {
         state = !listener.keys ? !listener.altState ? state : listener.altState(this.state) || {} : this._vlowFilterState(state, listener.keys);
-
         if (Object.keys(state).length) {
             const component = listener.component;
             switch (component._vlowState_) {
@@ -92,7 +102,6 @@ class Store {
         } // End debug
 
         this._vlowSetState(listener, this.state, undefined);
-
         return id;
     }
 
