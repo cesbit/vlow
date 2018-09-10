@@ -2,7 +2,7 @@
 import React from 'react';
 import Store from './store';
 import States from './states';
-import invariant from 'fbjs/lib/invariant';
+import invariant from 'invariant';
 
 const ComponentFactory = (SuperClass) => {
 

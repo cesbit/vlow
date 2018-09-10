@@ -1,6 +1,6 @@
 /* global process */
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import invariant from 'fbjs/lib/invariant';
+import invariant from 'invariant';
 
 class Actions {
     constructor(names) {
