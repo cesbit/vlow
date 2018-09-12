@@ -229,7 +229,7 @@ this.mapStores([
         keys: ['foo', 'status']
     }, {
         store: StoreFour,
-        altState: state => state
+        altState: storeState, state, props => storeState
     }
 ]);
 ```
@@ -248,22 +248,20 @@ class MyComponent extends Vlow.Component.extend(React.PureComponent) {
 }
 ```
 
-
 ### Using altState
 Sometimes you want to listen to state changes in a store but then do something
 with this state instead of just applying the state to a component.
-This can be done by using an `altState(state)` hook which
-will be triggered on state changes in the store but before the component state
+This can be done by using an `altState(storeState, state, props)` hook which
+will be triggered on state changes in the store but *before* the component state
 is changed. The `altState` function should return the state changes you want to
 make or `null` in case you don't want to update the state of the component.
 ```javascript
-this.mapStore({store: ExampleStore, alState: (state) => {
-    // The `state` is received from the store. This is not the
-    // components state. This function should return the state
-    // you want to apply on `this` component. The function can
+function altState(storeState, state, props) {
+    // This function should return the state
+    // you want to apply on the component. The function can
     // also return `null` in which case the components state
     // will not be changed.
-    if (this.props.status === 'error') {
+    if (props.status === 'error') {
         // the components state will not be changed
         return null;
     }
@@ -271,8 +269,14 @@ this.mapStore({store: ExampleStore, alState: (state) => {
     // Other components still receive the `original` state
     // from the store.
     return {
-        items: state.items.filter(i => i.age > this.state.minAge)
+        items: storeState.items.filter(i => i.age > state.minAge)
     };
-}});
+}
+
+// Use the altState function
+const stores = {
+    store: MyStore,
+    altState,
+};
 ```
 

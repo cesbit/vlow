@@ -213,10 +213,12 @@ describe('Test alter state', () => {
     class Component extends Vlow.Component.extend(FakeReactComponent) {
         constructor(props) {
             super(props);
-            this.mapStore({store: TestStore, altState: (state) => {
-                return !state ? null : {
-                    items: state.items,
-                    len: state.items.length
+            this.mapStore({store: TestStore, altState: (storeState, state, props) => {
+                assert(state === this.state, '`state` must be equal to the components state.');
+                assert(props === this.props, '`props` must be equal to the components props.');
+                return !storeState ? null : {
+                    items: storeState.items,
+                    len: storeState.items.length
                 };
             }});
         }

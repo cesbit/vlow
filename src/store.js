@@ -48,10 +48,10 @@ class Store {
     }
 
     _vlowSetState(listener, state, counter) {
-        state = !listener.keys ? !listener.altState ? state : listener.altState(this.state) || {} : this._vlowFilterState(state, listener.keys);
+        const component = listener.component;
+        state = !listener.keys ? !listener.altState ? state : listener.altState(this.state, component.state, component.props) || {} : this._vlowFilterState(state, listener.keys);
 
         if (Object.keys(state).length) {
-            const component = listener.component;
             switch (component._vlowState_) {
             case States.init:
                 counter ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Store `%s` is using `setState()` with a callback on component `%s` which is not yet mounted. This is not possible, make sure all components are mounted or remove the callback from setState.', this.constructor.name, component.constructor.name) : invariant(false) : undefined;
