@@ -116,7 +116,7 @@ describe('Test Vlow.Component', () => {
     });
 
     it('Component should be able to mount', () => {
-        assert.doesNotThrow(() => { component.componentWillMount(); });
+        assert.doesNotThrow(() => { component.UNSAFE_componentWillMount(); });
     });
 
 
@@ -146,7 +146,7 @@ describe('Test withVlow', () => {
     });
 
     it('Component should be able to mount', () => {
-        assert.doesNotThrow(() => { component.componentWillMount(); });
+        assert.doesNotThrow(() => { component.UNSAFE_componentWillMount(); });
     });
 
 
@@ -176,7 +176,7 @@ describe('Test Vlow.Component.extend', () => {
     });
 
     it('Component should be able to mount', () => {
-        assert.doesNotThrow(() => { extendedComponent.componentWillMount(); });
+        assert.doesNotThrow(() => { extendedComponent.UNSAFE_componentWillMount(); });
     });
 
     it('Component should unmount', () => {
@@ -195,7 +195,7 @@ describe('Test Exception when overwriting state', () => {
     const component = new Component();
 
     it('Raise when will mount is called', () => {
-        assert.throws(() => component.componentWillMount());
+        assert.throws(() => component.UNSAFE_componentWillMount());
     });
 
     it('Component should still unmount', () => {

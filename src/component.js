@@ -45,7 +45,7 @@ const ComponentFactory = (SuperClass) => {
             stores.forEach(s => this._vlowRegisterStore_(s));
         }
 
-        componentWillMount() {
+        UNSAFE_componentWillMount() {
             this._vlowState_ = States.ready;
             !!this._vlowTmpState && this._vlowTmpState !== this.state ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Component `%s` state has been overwritten after registering a store.', this.constructor.name) : invariant(false) : undefined;
             delete this._vlowTmpState;
