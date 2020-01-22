@@ -1,6 +1,6 @@
 /* global require, __dirname, module, process */
 const path = require('path');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
     mode: 'production',
@@ -28,13 +28,12 @@ const config = {
     },
     optimization: {
         minimizer: [
-            new UglifyJSPlugin({
-                uglifyOptions: {
-                    compress: {
-                        warnings: true
-                    }
-                }
-            })
+            new TerserPlugin({
+                parallel: true,
+                terserOptions: {
+                    ecma: 5,
+                },
+            }),
         ]
     }
 };
