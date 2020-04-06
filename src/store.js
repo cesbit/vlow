@@ -40,7 +40,7 @@ class Store {
 
     _vlowFilterState(state, keys) {
         return keys.reduce((o, k)=> {
-            if (state.hasOwnProperty(k)) {
+            if (Object.prototype.hasOwnProperty.call(state, k)) {
                 o[k] = state[k];
             }
             return o;
