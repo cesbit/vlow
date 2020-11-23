@@ -1,13 +1,13 @@
 {
   "name": "vlow",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
   "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --require @babel/register",
     "lint": "./node_modules/.bin/eslint ./src/*.js --color",
-    "build:dev": "./node_modules/.bin/webpack -d --progress --profile --colors",
-    "build:prod": "NODE_ENV='production' ./node_modules/.bin/webpack -p --progress --profile --colors",
+    "build:dev": "./node_modules/.bin/webpack -d --progress",
+    "build:prod": "NODE_ENV='production' ./node_modules/.bin/webpack --progress",
     "babel": "npx babel src --out-dir lib && cp src/index.d.ts lib/ && echo \">WARNING: This \\`lib\\` folder is generated with \\`npm run babel\\` and should not be modified!\" > lib/README.md "
   },
   "repository": {
@@ -37,26 +37,26 @@
   },
   "homepage": "https://github.com/transceptor-technology/vlow#readme",
   "dependencies": {
-    "@babel/runtime": "^7.9.2",
+    "@babel/runtime": "^7.12.5",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-transform-object-assign": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/register": "^7.9.0",
+    "@babel/cli": "^7.12.7",
+    "@babel/core": "^7.12.7",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-object-assign": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/register": "^7.12.1",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.1",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.21.5",
     "mocha": "^7.1.1",
-    "react": "^16.13.1",
+    "react": "^16.14.0",
     "terser": "^4.6.10",
     "terser-webpack-plugin": "^2.3.5",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.2.0"
   }
 }
