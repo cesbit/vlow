@@ -47,8 +47,6 @@ class TestComponent extends Vlow.Component {
     }
 }
 
-const TestWithComponent = withVlow(TestStore)(() => null);
-
 class SomeClass extends React.Component {
     isSomeClass() {
         return true;
@@ -57,6 +55,8 @@ class SomeClass extends React.Component {
         return null;
     }
 }
+
+const TestWithComponent = withVlow(TestStore)(SomeClass);
 
 class TestExtendedComponent extends Vlow.Component.extend(SomeClass) {
     constructor(props) {
@@ -89,30 +89,29 @@ describe('Test Vlow.createActions', () => {
     it('Create valid actions', () => {
         let result;
         assert.doesNotThrow(() => { result = Vlow.createActions(['fetch', 'update']); });
-        assert.equal(typeof result.fetch, 'function');
-        assert.equal(typeof result.update, 'function');
+        assert.strictEqual(typeof result.fetch, 'function');
+        assert.strictEqual(typeof result.update, 'function');
     });
-
 });
 
 describe('Test Vlow.Component', () => {
     const component = new TestComponent();
 
     it('Initial items should return empty', () => {
-        assert.deepEqual(component.state.items, []);
+        assert.deepStrictEqual(component.state.items, []);
     });
 
     it('Add action should add items to the store', () => {
         TestActions.add(item0);
         TestActions.add(item1);
-        assert.equal(component.state.items.length, 2);
+        assert.strictEqual(component.state.items.length, 2);
     });
 
     it('Pop action should remove the last item from the store', () => {
-        assert.equal(component.state.items.length, 2);
+        assert.strictEqual(component.state.items.length, 2);
         TestActions.pop();
         TestActions.pop();
-        assert.equal(component.state.items.length, 0);
+        assert.strictEqual(component.state.items.length, 0);
     });
 
     it('Component should be able to mount', () => {
@@ -129,26 +128,25 @@ describe('Test withVlow', () => {
     const component = new TestWithComponent();
 
     it('Initial items should return empty', () => {
-        assert.deepEqual(component.state.items, []);
+        assert.deepStrictEqual(component.state.items, []);
     });
 
     it('Add action should add items to the store', () => {
         TestActions.add(item0);
         TestActions.add(item1);
-        assert.equal(component.state.items.length, 2);
+        assert.strictEqual(component.state.items.length, 2);
     });
 
     it('Pop action should remove the last item from the store', () => {
-        assert.equal(component.state.items.length, 2);
+        assert.strictEqual(component.state.items.length, 2);
         TestActions.pop();
         TestActions.pop();
-        assert.equal(component.state.items.length, 0);
+        assert.strictEqual(component.state.items.length, 0);
     });
 
     it('Component should be able to mount', () => {
         assert.doesNotThrow(() => { component.componentDidMount(); });
     });
-
 
     it('Component should unmount', () => {
         assert.doesNotThrow(() => { component.componentWillUnmount(); });
@@ -159,20 +157,20 @@ describe('Test Vlow.Component.extend', () => {
     const extendedComponent = new TestExtendedComponent();
 
     it('Initial items should return empty', () => {
-        assert.deepEqual(extendedComponent.state.items, []);
+        assert.deepStrictEqual(extendedComponent.state.items, []);
     });
 
     it('Add action should add items to the store', () => {
         TestActions.add(item0);
         TestActions.add(item1);
-        assert.equal(extendedComponent.state.items.length, 2);
+        assert.strictEqual(extendedComponent.state.items.length, 2);
     });
 
     it('Pop action should remove the last item from the store', () => {
-        assert.equal(extendedComponent.state.items.length, 2);
+        assert.strictEqual(extendedComponent.state.items.length, 2);
         TestActions.pop();
         TestActions.pop();
-        assert.equal(extendedComponent.state.items.length, 0);
+        assert.strictEqual(extendedComponent.state.items.length, 0);
     });
 
     it('Component should be able to mount', () => {
@@ -228,7 +226,7 @@ describe('Test alter state', () => {
 
     it('Component len state property should be set', () => {
         TestActions.add(item0);
-        assert.equal(component.state.len, 1);
+        assert.strictEqual(component.state.len, 1);
     });
 
     it('Component should unmount and persistent stores should be checked', () => {

@@ -11,7 +11,7 @@ const withVlow = (stores, WrappedComponent) => {
             Array.isArray(stores) ? this.mapStores(stores) : this.mapStore(stores);
         }
         render() {
-            return React.createElement(WrappedComponent, Object.assign({}, this.state, this.props), null);
+            return React.createElement(WrappedComponent, Object.assign({}, this.state, this.props), this.props ? this.props.children : null);
         }
     };
     WithVlow.displayName = `WithVlow()(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
