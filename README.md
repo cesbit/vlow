@@ -1,4 +1,8 @@
+[![CI](https://github.com/transceptor-technology/vlow/workflows/CI/badge.svg)](https://github.com/transceptor-technology/vlow/actions)
+[![Release Version](https://img.shields.io/github/release/transceptor-technology/vlow)](https://github.com/transceptor-technology/vlow/releases)
+
 # Vlow
+
 A simple library for unidirectional dataflow architecture inspired by Reflux
 
 ---------------------------------------
