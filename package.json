@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/transceptor-technology/vlow.git"
+    "url": "git+https://github.com/cesbit/vlow.git"
   },
   "keywords": [
     "Reflux",
@@ -33,9 +33,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/transceptor-technology/vlow/issues"
+    "url": "https://github.com/cesbit/vlow/issues"
   },
-  "homepage": "https://github.com/transceptor-technology/vlow#readme",
+  "homepage": "https://github.com/cesbit/vlow#readme",
   "dependencies": {
     "@babel/runtime": "^7.16.3",
     "invariant": "^2.2.4"

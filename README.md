@@ -1,5 +1,5 @@
-[![CI](https://github.com/transceptor-technology/vlow/workflows/CI/badge.svg)](https://github.com/transceptor-technology/vlow/actions)
-[![Release Version](https://img.shields.io/github/release/transceptor-technology/vlow)](https://github.com/transceptor-technology/vlow/releases)
+[![CI](https://github.com/cesbit/vlow/workflows/CI/badge.svg)](https://github.com/cesbit/vlow/actions)
+[![Release Version](https://img.shields.io/github/release/cesbit/vlow)](https://github.com/cesbit/vlow/releases)
 
 # Vlow
 
@@ -37,7 +37,7 @@ import Vlow from 'vlow';
 //  - Vlow.withVlow
 ```
 
-Or... download the latest release from [here](https://github.com/transceptor-technology/vlow/releases/latest) and load the file in inside your project.
+Or... download the latest release from [here](https://github.com/cesbit/vlow/releases/latest) and load the file in inside your project.
 For example:
 ```html
 <!-- Add this line to expose `window.vlow.default` -->
