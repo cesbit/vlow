@@ -19,10 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import Store from './store';
-import Component from './component';
-import {createActions} from './actions';
-import withVlow from './withVlow';
+import Store from './store.js';
+import Component from './component.js';
+import {createActions} from './actions.js';
+import withVlow from './withVlow.js';
 
 const Vlow = {
     version: '1.1.20',

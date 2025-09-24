@@ -1,7 +1,7 @@
 /* global process */
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-import States from './states';
 import invariant from 'invariant';
+import States from './states.js';
 
 const _stores = [];
 

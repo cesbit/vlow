@@ -1,5 +1,5 @@
 import React from 'react';
-import Component from './component';
+import Component from './component.js';
 
 const withVlow = (stores, WrappedComponent) => {
     if (WrappedComponent === undefined) {

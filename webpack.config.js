@@ -1,8 +1,12 @@
 /* global require, __dirname, module, process */
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+import { fileURLToPath } from 'url';
 
-const config = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
     mode: 'production',
     entry: './src/index.js',
     output: {
@@ -37,5 +41,3 @@ const config = {
         ]
     }
 };
-
-module.exports = config;

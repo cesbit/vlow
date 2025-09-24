@@ -1,8 +1,8 @@
 /* global process */
 import React from 'react';
-import Store from './store';
-import States from './states';
 import invariant from 'invariant';
+import Store from './store.js';
+import States from './states.js';
 
 const ComponentFactory = (SuperClass) => {
 
