@@ -1,4 +1,4 @@
-/* global require, __dirname, module, process */
+/* global process */
 import path from 'path';
 import TerserPlugin from 'terser-webpack-plugin';
 import { fileURLToPath } from 'url';
