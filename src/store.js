@@ -11,6 +11,7 @@ class Store {
         this._vlowLastId_ = 0;
         this._vlowListeners_ = {};
         this.state = this.state || {};  // ensure state, may be overwritten in SubClass constructor
+
         actions.forEach(a => a._addStore(this));
     }
 
@@ -36,6 +37,22 @@ class Store {
         })();
 
         listeners.forEach(listener => this._vlowSetState(listener, newState, counter));
+    }
+
+    unregisterStore() {
+        if (Object.keys(this._vlowListeners_).length === 0) {
+            const index = _stores.findIndex((m) => m.store === this);
+            if (index !== -1) {
+                _stores.splice(index, 1);
+            }
+        } else {
+            console.error('failed to unregister store, the store still has listeners');
+        }
+    }
+
+    listenersEmpty() {
+        // This will be called when there are no more listeners bound to the store.
+        // It is possible to do something here, for example call this.unregisterStore(); to remove the store from memory.
     }
 
     _vlowFilterState(state, keys) {
@@ -98,6 +115,9 @@ class Store {
 
     _vlowRemoveListener(id) {
         delete this._vlowListeners_[id];
+        if (Object.keys(this._vlowListeners_).length === 0) {
+            this.listenersEmpty();
+        }
     }
 
     static _vlowGetOrCreateStore(StoreClass) {
