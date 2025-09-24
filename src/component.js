@@ -10,7 +10,7 @@ const ComponentFactory = (SuperClass) => {
 
         constructor(props) {
             super(props);
-            this._vlowStores_ = {};
+            this._vlowStores_ = [];
             this._vlowState_ = States.init;
             this._vlowTmpState = null;
         }
@@ -29,8 +29,10 @@ const ComponentFactory = (SuperClass) => {
             const altState = store.altState;
             keys && altState ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Component `%s` is registering a store using both `keys` and `altState` but they cannot be used at the same time.', this.constructor.name) : invariant(false) : undefined;
             store = Store._vlowGetOrCreateStore((typeof store === 'function') ? store : store.store);
-            const id = store._vlowAddListener(this, keys, altState);
-            this._vlowStores_[id] = store;
+            if (!this._vlowStores_.includes(store)) {
+                store._vlowAddListener(this, keys, altState);
+                this._vlowStores_.push(store);
+            }
             this._vlowTmpState = this.state;
         }
 
@@ -53,7 +55,7 @@ const ComponentFactory = (SuperClass) => {
 
         componentWillUnmount() {
             this._vlowState_ = States.stop;
-            Object.keys(this._vlowStores_).forEach(id => this._vlowStores_[id]._vlowRemoveListener(id));
+            this._vlowStores_.forEach(store => store._vlowRemoveListener(this));
         }
     }
 

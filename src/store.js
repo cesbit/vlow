@@ -8,8 +8,7 @@ const _stores = [];
 
 class Store {
     constructor(...actions) {
-        this._vlowLastId_ = 0;
-        this._vlowListeners_ = {};
+        this._vlowListeners_ = [];
         this.state = this.state || {};  // ensure state, may be overwritten in SubClass constructor
 
         actions.forEach(a => a._addStore(this));
@@ -25,7 +24,7 @@ class Store {
         this.state = Object.assign(this.state, newState);
 
         // get listeners
-        const listeners = Object.values(this._vlowListeners_);
+        const listeners =this._vlowListeners_;
 
         // counter is used only when a callback argument is used
         const counter = cb === undefined ? undefined : (() => {
@@ -40,7 +39,7 @@ class Store {
     }
 
     unregisterStore() {
-        if (Object.keys(this._vlowListeners_).length === 0) {
+        if (this._vlowListeners_.length === 0) {
             const index = _stores.findIndex((m) => m.store === this);
             if (index !== -1) {
                 _stores.splice(index, 1);
@@ -87,10 +86,8 @@ class Store {
     }
 
     _vlowAddListener(component, keys, altState) {
-        const id = this._vlowLastId_;
         const listener = {component, keys, altState};
-        this._vlowListeners_[id] = listener;
-        this._vlowLastId_++;
+        this._vlowListeners_.push(listener);
 
         // Debug: check for duplicate key assignment
         if (process.env.NODE_ENV !== 'production') {
@@ -109,13 +106,14 @@ class Store {
         } // End debug
 
         this._vlowSetState(listener, this.state, undefined);
-
-        return id;
     }
 
-    _vlowRemoveListener(id) {
-        delete this._vlowListeners_[id];
-        if (Object.keys(this._vlowListeners_).length === 0) {
+    _vlowRemoveListener(listener) {
+        const index = this._vlowListeners_.indexOf(listener);
+        if (index !== -1) {
+            this._vlowListeners.splice(index, 1);
+        }
+        if (this._vlowListeners_.length === 0) {
             this.listenersEmpty();
         }
     }
