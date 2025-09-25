@@ -108,10 +108,10 @@ class Store {
         this._vlowSetState(listener, this.state, undefined);
     }
 
-    _vlowRemoveListener(listener) {
-        const index = this._vlowListeners_.indexOf(listener);
+    _vlowRemoveListener(component) {
+        const index = this._vlowListeners_.findIndex((listener) => listener.component === component);
         if (index !== -1) {
-            this._vlowListeners.splice(index, 1);
+            this._vlowListeners_.splice(index, 1);
         }
         if (this._vlowListeners_.length === 0) {
             this.listenersEmpty();
