@@ -15,17 +15,27 @@ class Actions {
     }
 
     _on(onKey, payload) {
-        this._callbacks[onKey].forEach(cb => cb(...payload));
+        this._callbacks[onKey].forEach(({cb}) => cb(...payload));
     }
 
     _addStore(store) {
         for (let onKey in this._callbacks) {
             if (typeof store[onKey] === 'function') {
-                this._callbacks[onKey].push(store[onKey].bind(store));
+                this._callbacks[onKey].push({
+                    cb: store[onKey].bind(store),
+                    store
+                });
             } else if (process.env.NODE_ENV !== 'production') {
                 console.warn('Store `%s` is missing function `%s` (action will be ignored).', store.constructor.name, onKey);
             }
         }
+    }
+
+    _delStore(store) {
+        const s = store;
+        Object.keys(this._callbacks).forEach((onKey) => {
+            this._callbacks[onKey] = this._callbacks[onKey].filter(({store}) => store !== s);
+        });
     }
 }
 

@@ -10,8 +10,8 @@ class Store {
     constructor(...actions) {
         this._vlowListeners_ = [];
         this.state = this.state || {};  // ensure state, may be overwritten in SubClass constructor
-
-        actions.forEach(a => a._addStore(this));
+        this._actions_ = actions;
+        this._actions_.forEach(a => a._addStore(this));
     }
 
     setState(newState, cb) {
@@ -43,6 +43,7 @@ class Store {
             const index = _stores.findIndex((m) => m.store === this);
             if (index !== -1) {
                 _stores.splice(index, 1);
+                this._actions_._delStore(this);
             }
         } else {
             console.error('failed to unregister store, the store still has listeners');
