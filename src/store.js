@@ -43,7 +43,7 @@ class Store {
             const index = _stores.findIndex((m) => m.store === this);
             if (index !== -1) {
                 _stores.splice(index, 1);
-                this._actions_._delStore(this);
+                this._actions_.forEach(a => a._delStore(this));
             }
         } else {
             console.error('failed to unregister store, the store still has listeners');
