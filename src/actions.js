@@ -40,5 +40,6 @@ class Actions {
 }
 
 const createActions = (names) => new Actions(names);
+const factoryActions = () => (names) => new Actions(names);
 
-export {Actions, createActions};
+export {Actions, createActions, factoryActions};
