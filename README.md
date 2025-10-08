@@ -32,6 +32,7 @@ import Vlow from 'vlow';
 // Exposes:
 //  - Vlow.version
 //  - Vlow.createActions
+//  - Vlow.factoryActions
 //  - Vlow.Store
 //  - Vlow.Component
 //  - Vlow.withVlow
@@ -54,7 +55,7 @@ There are three steps which need to be understood to use Vlow:
 1. [Create Actions](#create-actions)
 2. [Create Stores](#create-a-store)
 3. [Map store(s) to Components](#map-stores-to-components)
-
+4. [TypeScript Store and Actions](#use-typescript)
 
 ## Create actions
 Actions can be created using the `Vlow.createActions` function:
@@ -282,4 +283,27 @@ const stores = {
     store: MyStore,
     altState,
 };
+```
+
+## Use TypeScript
+
+With Vlow, it is possible to use TypeScript and have both the state in your store and the actions typed.
+
+Example:
+
+```javascript
+// represends the state on the store, e.g. this.state.todos
+export interface IMyStore {
+    todos: string[];
+}
+
+class MyStore extends Vlow.Store<IMyStore> {
+    onFetch() { /* fetch todo's... */ }
+}
+
+const actions = [
+    'fetch',
+] as const;
+const MyActions = Vlow.factoryActions<MyStore>()(actions);
+// MyActions.fetch() understands the arguments of the `onFetch` defined in the store
 ```
