@@ -1,11 +1,11 @@
 {
   "name": "vlow",
-  "version": "1.1.25",
+  "version": "1.1.26",
   "type": "module",
   "description": "A simple library for unidirectional dataflow architecture inspired by Reflux",
   "main": "lib/index.js",
-  "types": "index.d.ts",
-  "typings": "index.d.ts",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/mocha --require @babel/register",
     "lint": "./node_modules/.bin/eslint ./src/*.js --color",
