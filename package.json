@@ -9,7 +9,7 @@
     "lint": "./node_modules/.bin/eslint ./src/*.js --color",
     "build:dev": "./node_modules/.bin/webpack --progress --devtool eval-cheap-source-map",
     "build:prod": "NODE_ENV='production' ./node_modules/.bin/webpack --progress",
-    "babel": "npx babel src --out-dir lib && cp src/index.d.ts lib/ && echo \">WARNING: This \\`lib\\` folder is generated with \\`npm run babel\\` and should not be modified!\" > lib/README.md "
+    "babel": "cp src/vlow.d.ts lib/vlow.d.ts && npx babel src --out-dir lib && cp src/index.d.ts lib/ && echo \">WARNING: This \\`lib\\` folder is generated with \\`npm run babel\\` and should not be modified!\" > lib/README.md "
   },
   "repository": {
     "type": "git",
