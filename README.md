@@ -15,6 +15,8 @@ A simple library for unidirectional dataflow architecture inspired by Reflux
     * [Using Vlow Component](#using-vlow-component)
         * [Alternative super class](#alternative-super-class)
     * [Using altState](#using-altstate)
+    * [No more listeners](#no-more-listeners)
+  * [TypeScript Store and Actions](#use-typescript)
 
 ---------------------------------------
 
@@ -55,7 +57,6 @@ There are three steps which need to be understood to use Vlow:
 1. [Create Actions](#create-actions)
 2. [Create Stores](#create-a-store)
 3. [Map store(s) to Components](#map-stores-to-components)
-4. [TypeScript Store and Actions](#use-typescript)
 
 ## Create actions
 Actions can be created using the `Vlow.createActions` function:
@@ -285,6 +286,28 @@ const stores = {
 };
 ```
 
+### No more listeners
+If there are no components left who listen to the store, the store function `listenersEmpty()` is called.
+By default, this function does nothing but you might implement it yourself and overwrite the default behavior.
+For example, you might want to unregister the store if no more components are listening to clean-up memory:
+
+```javascript
+import Vlow from 'vlow';
+
+// define the state on the store, e.g. this.state.todos
+export interface IMyStore {
+    todos: string[];
+}
+
+class MyStore extends Vlow.Store<IMyStore> {
+
+    listenersEmpty() {
+        this.unregisterStore();  // the store will unregister itself from the
+                                 // actions until a new store is created
+    }
+}
+```
+
 ## Use TypeScript
 
 With Vlow, it is possible to use TypeScript and have both the state in your store and the actions typed.
@@ -292,18 +315,20 @@ With Vlow, it is possible to use TypeScript and have both the state in your stor
 Example:
 
 ```javascript
-// represends the state on the store, e.g. this.state.todos
+import Vlow from 'vlow';
+
+// define the state on the store, e.g. this.state.todos
 export interface IMyStore {
     todos: string[];
 }
 
 class MyStore extends Vlow.Store<IMyStore> {
-    onFetch() { /* fetch todo's... */ }
+    onFetch(limit: number) { /* fetch todo's... */ }
 }
 
 const actions = [
     'fetch',
 ] as const;
 const MyActions = Vlow.factoryActions<MyStore>()(actions);
-// MyActions.fetch() understands the arguments of the `onFetch` defined in the store
+// MyActions.fetch(10); understands the arguments of the `onFetch` defined in the store
 ```
