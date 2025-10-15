@@ -21,19 +21,20 @@
  */
 import Store from './store.js';
 import Component from './component.js';
-import {createActions} from './actions.js';
+import {createActions, factoryActions} from './actions.js';
 import withVlow from './withVlow.js';
 
 const Vlow = {
-    version: '1.1.26',
+    version: '1.1.27',
 };
 
 Vlow.Store = Store;
 Vlow.Component = Component;
 Vlow.createActions = createActions;
+Vlow.factoryActions = factoryActions;
 Vlow.withVlow = withVlow;
 
-export {Store, Component, createActions, withVlow};
+export {Store, Component, createActions, factoryActions, withVlow};
 export default Vlow;
 
 
