@@ -20,7 +20,7 @@ export class Store<T> {
     state: T;
     setState(newStateOrCallback: Partial<T> | ((prev: T) => Partial<T>), cb?: any): void;
     unregisterStore(): void;
-    listenerEmpty(): void;
+    listenersEmpty(): void;
 }
 
 export function Component(...args: any[]): any;
