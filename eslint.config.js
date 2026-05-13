@@ -1,7 +1,5 @@
 import globals from "globals";
 import eslint from "@eslint/js";
-import babelParser from "@babel/eslint-parser";
-import react from "eslint-plugin-react";
 
 export default [
   {
@@ -25,18 +23,12 @@ export default [
         ...globals.es2021 // Use es2021 instead of es6 for a broader set of globals
       },
       // Sets the parser and its options
-      parser: babelParser,
       parserOptions: {
         ecmaFeatures: {
           jsx: false,
         },
         requireConfigFile: false,
       }
-    },
-
-    // Defines plugins and their rules
-    plugins: {
-      react: react,
     },
 
     // Defines custom rules
@@ -56,8 +48,7 @@ export default [
       "semi": [
         "error",
         "always"
-      ],
-      "react/jsx-uses-vars": "error"
+      ]
     }
   }
 ];
