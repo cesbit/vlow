@@ -38,7 +38,7 @@ export function withVlow<TInjected extends object = object>(
     ...args: unknown[]
 ): <P extends TInjected>(
     Component: React.ComponentType<P>
-) => React.ComponentType<Omit<P, keyof TInjected>>;
+) => React.ComponentType<Omit<P, keyof TInjected> & Partial<TInjected>>;
 
 export namespace Component {
     function extend(SuperClass: any): any;
