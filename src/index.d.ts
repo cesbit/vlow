@@ -1,4 +1,5 @@
 // index.d.ts (Should contain all the declarations for the 'vlow' module)
+import type * as React from 'react';
 
 // Helper types
 type SafeStoreLookup<TStore, Key extends string> = Key extends keyof TStore
@@ -33,7 +34,7 @@ export function factoryActions<Store>(): {
 // The direct function (might be redundant if factoryActions is used)
 export function createActions<Store, T extends readonly string[]>(names: T): StoreActions<Store, T>;
 
-export function withVlow(...args: any[]): any;
+export function withVlow<P extends object>(...args: unknown[]): (Component: React.ComponentType<P>) => React.ComponentType<P>;
 
 export namespace Component {
     function extend(SuperClass: any): any;
