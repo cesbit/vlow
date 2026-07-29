@@ -34,7 +34,11 @@ export function factoryActions<Store>(): {
 // The direct function (might be redundant if factoryActions is used)
 export function createActions<Store, T extends readonly string[]>(names: T): StoreActions<Store, T>;
 
-export function withVlow<P extends object>(...args: unknown[]): (Component: React.ComponentType<P>) => React.ComponentType<P>;
+export function withVlow<TInjected extends object = object>(
+    ...args: unknown[]
+): <P extends TInjected>(
+    Component: React.ComponentType<P>
+) => React.ComponentType<Omit<P, keyof TInjected>>;
 
 export namespace Component {
     function extend(SuperClass: any): any;
